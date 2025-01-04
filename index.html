@@ -1,0 +1,190 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, rgb(0, 140, 255), #8bc7ff);
+    }
+
+    .outer {
+      margin: auto;
+      max-width: 750px;
+      background: #00bbff;
+      border: 2px solid #00bfff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #b1deff;
+      border-radius: 10px;
+    }
+
+    input[type="number"] {
+      border: 2px solid #00bfff;
+      border-radius: 5px;
+      padding: 10px;
+      margin-right: 15px;
+      width: 70px;
+      text-align: center;
+      background-color: #47d4ff;
+      font-size: 18px;
+    }
+ 
+    button {
+      background-color: #47d4ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+      background-color: #0b27fb;
+    }
+
+    .die {
+      margin: 10px;
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .die:hover {
+      transform: scale(1.2);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #dice-options {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    #output {
+      margin-top: 25px;
+      padding: 15px;
+      border: 2px solid #4e80ff;
+      border-radius: 10px;
+      background-color: #b1deff;
+      min-height: 80px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: #333;
+      font-size: 16px;
+    }
+    #strong {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+    }
+    svg {
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      fill: #47b5ff;
+      transition: fill 0.3s ease;
+    }
+    
+    svg:hover {
+      fill: #3da1ff;
+    }
+  </style>
+  <script>
+    var dieFace = {
+      4: '<svg><polygon points="0,3 25,46 50,3" style="stroke: black; fill: #3da1ff" /><text fill="black" x="20" y="26" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      6: '<svg><polygon points="3,3 3,47 47,47 47,3" style="stroke: black; fill: #47b5ff" /><text fill="black" x="20" y="30" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      8: '<svg><polygon points="17,0 60,25 17,50 17,0 0,25 17,50" style="stroke: black; fill: #b1deff" /><text fill="black" x="25" y="30" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      10: '<svg><polygon points="43,50 0,25 43,0 50,25" style="stroke: black; fill: #4e80ff" /><text fill="black" x="20" y="30" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      12: '<svg><polygon points="25,0 1,17 10,45 40,45 49,17" style="stroke: black; fill: #0b27fb" /><text fill="black" x="13" y="30" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      20: '<svg><polygon points="0,46 25,0 50,46" style="stroke: black; fill: #47d4ff" /><text fill="black" x="13" y="40" font-family="Verdana" font-size="18">REPLACEME</text></svg>',
+      'other': '<svg><circle cx="25" cy="25" r="20" style="stroke: black; fill: #47d4ff" /><text fill="black" x="13" y="31" font-family="Verdana" font-size="18">REPLACEME</text></svg>'
+    };
+
+    function rollem() {
+      let total = 0;
+      let n = document.getElementById('num').value;
+      let d = document.getElementById('die').value;
+      let o = document.getElementById('output');
+      let p = o.innerHTML;
+
+      let face = dieFace[d] || dieFace['other'];
+
+      if (p !== '') {
+        p = p.concat('<hr>');
+      } else {
+        p = p.concat('<button id="clear" onclick="clearme()" style="float:right;">Clear</button>');
+      }
+
+      for (let i = 0; i < n; i++) {
+        let r = Math.ceil(Math.random() * d);
+        total += r;
+        p = p.concat(`<span class="die">${face.replace('REPLACEME', r.toString())}</span>`);
+      }
+
+      p += ` <strong id="strong">Total: ${total}</strong>`;
+      o.innerHTML = p;
+    }
+
+    function clearme() {
+      document.getElementById('output').innerHTML = "";
+    }
+
+    function loady() {
+      for (let f in dieFace) {
+        let e = document.getElementById(f);
+        if (e) e.innerHTML = dieFace[f].replace('REPLACEME', f);
+      }
+    }
+
+    function dieClick(whatzis) {
+      let n = document.getElementById('num');
+      let d = document.getElementById('die');
+
+      if (whatzis.id == d.value) {
+        n.value = Number(n.value) + 1;
+      } else {
+        n.value = 1;
+        d.value = whatzis.id;
+      }
+    }
+  </script>
+</head>
+<body onload="loady()">
+  <div class="outer">
+    <div id="control">
+      <input type="number" step="1" id="num" value="3" maxlength="3"> 
+      <input type="number" step="1" id="die" value="6" maxlength="3">
+      <button id="roll" onclick="rollem()">Roll</button>
+    </div>
+
+    <div id="dice-options">
+      <span id="4" onclick="dieClick(this)">d4</span>
+      <span id="6" onclick="dieClick(this)">d6</span>
+      <span id="8" onclick="dieClick(this)">d8</span>
+      <span id="10" onclick="dieClick(this)">d10</span>
+      <span id="12" onclick="dieClick(this)">d12</span>
+      <span id="20" onclick="dieClick(this)">d20</span>
+    </div>
+
+    <div id="output"></div>
+  </div>
+</body>
+</html>
