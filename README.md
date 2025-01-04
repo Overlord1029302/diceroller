@@ -39,11 +39,7 @@ The Dice Roller Web App is an interactive tool for rolling various types of dice
 ## Future Enhancements
 - Add sound effects for dice rolls.
 - Implement animation for rolling dice.
-- Provide a history log of rolls.
 - Allow saving and exporting roll results.
-
-## Contributing
-Contributions are welcome! Feel free to fork this repository and submit a pull request with any improvements or new features.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
