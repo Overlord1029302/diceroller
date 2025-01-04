@@ -34,7 +34,8 @@ The Dice Roller Web App is an interactive tool for rolling various types of dice
 4. A clear button allows resetting the results for new rolls.
 
 ## Screenshots
-*(Add screenshots here to showcase the app interface and functionality.)*
+![image](https://github.com/user-attachments/assets/d2b99a34-919c-4756-b1b4-e40ddd3d87e3)
+
 
 ## Future Enhancements
 - Add sound effects for dice rolls.
